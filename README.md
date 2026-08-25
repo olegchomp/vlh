@@ -4,6 +4,8 @@ Scheduler and timer tool for video engineers. Web UI talks to a local Python bac
 
 v.1.0.0 · [@VJSCHOOL](https://t.me/vjschool)
 
+![VLH screenshot](https://github.com/user-attachments/assets/ee8b0283-4c00-440d-bdac-f3cd8a0794a5)
+
 ## Features
 
 - **Scheduler** — Once / Daily / Weekly / Monthly tasks → OSC address + value
