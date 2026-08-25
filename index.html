@@ -1,0 +1,1149 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>VideoEngineer's Little Helper</title>
+  <style>
+    :root {
+      --font: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      --bg: #1a1a1a;
+      --bg-outer: #121212;
+      --sidebar: #2b2b2b;
+      --sidebar-active: #4a7a98;
+      --sidebar-text: #c8c8c8;
+      --sidebar-text-active: #ffffff;
+      --accent: #4a7a98;
+      --accent-bright: #6eb8e3;
+      --accent-hover: #5a8aab;
+      --card: #1a1a1a;
+      --main: #1a1a1a;
+      --input: #3d3d3d;
+      --text: #e0e0e0;
+      --text-dark: #ffffff;
+      --text-muted: #9a9a9a;
+      --border: #4a4a4a;
+      --header-bg: #4a7a98;
+      --row-hover: #222222;
+      --toggle-off: #555555;
+      --danger: #e05555;
+      --shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
+      --radius: 4px;
+      --sidebar-w: 220px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: var(--font);
+      background: var(--bg-outer);
+      min-height: 100vh;
+      color: var(--text);
+      padding: 18px;
+    }
+
+    .app {
+      display: flex;
+      max-width: 1280px;
+      margin: 0 auto;
+      min-height: calc(100vh - 36px);
+      background: var(--card);
+      border-radius: 6px;
+      box-shadow: var(--shadow);
+      overflow: visible;
+      border: 1px solid #2a2a2a;
+    }
+
+    /* —— Sidebar —— */
+    .sidebar {
+      width: var(--sidebar-w);
+      flex-shrink: 0;
+      background: var(--sidebar);
+      display: flex;
+      flex-direction: column;
+      border-right: 1px solid #1f1f1f;
+    }
+
+    .brand {
+      display: flex;
+      align-items: center;
+      padding: 18px 16px;
+      color: #fff;
+      font-weight: 700;
+      font-size: 18px;
+      letter-spacing: 0.5px;
+      font-style: italic;
+    }
+
+    .nav {
+      list-style: none;
+      padding-top: 4px;
+    }
+
+    .nav > li > a,
+    .nav > li > button {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      width: 100%;
+      padding: 13px 18px;
+      color: var(--sidebar-text);
+      text-decoration: none;
+      font-size: 12px;
+      font-weight: 600;
+      letter-spacing: 0.6px;
+      background: none;
+      border: none;
+      cursor: pointer;
+      text-align: left;
+      position: relative;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    .nav > li > a:hover,
+    .nav > li > button:hover {
+      color: #fff;
+      background: rgba(255, 255, 255, 0.04);
+    }
+
+    .nav > li.active > a,
+    .nav > li.active > button {
+      background: var(--sidebar-active);
+      color: var(--sidebar-text-active);
+    }
+
+    /* —— Main —— */
+    .main {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      background: var(--main);
+    }
+
+    /* —— Content —— */
+    .content {
+      padding: 20px 28px 28px;
+      flex: 1;
+    }
+
+    .breadcrumb {
+      font-size: 13px;
+      color: var(--text-muted);
+      margin-bottom: 14px;
+    }
+
+    .card {
+      background: #1f1f1f;
+      border-radius: var(--radius);
+      border: 1px solid #2e2e2e;
+      overflow: visible;
+    }
+
+    .card-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 14px 18px;
+      background: var(--header-bg);
+      border-radius: var(--radius) var(--radius) 0 0;
+    }
+
+    .card-header h1 {
+      font-size: 16px;
+      font-weight: 700;
+      color: #fff;
+      letter-spacing: 0.5px;
+    }
+
+    .btn-export {
+      background: #1a1a1a;
+      color: #fff;
+      border: 1px solid rgba(255, 255, 255, 0.25);
+      border-radius: 3px;
+      padding: 8px 14px;
+      font-size: 13px;
+      font-weight: 600;
+      font-family: inherit;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-export:hover {
+      background: #111;
+      border-color: var(--accent-bright);
+      color: var(--accent-bright);
+    }
+
+    /* —— Table —— */
+    .table-wrap {
+      overflow: visible;
+    }
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+
+    thead th {
+      background: #252525;
+      color: var(--text-muted);
+      font-weight: 600;
+      font-size: 11px;
+      letter-spacing: 0.5px;
+      text-align: left;
+      padding: 12px 16px;
+      white-space: nowrap;
+      border-bottom: 1px solid var(--border);
+    }
+
+    tbody td {
+      padding: 12px 16px;
+      border-bottom: 1px solid #2a2a2a;
+      color: var(--text);
+      vertical-align: middle;
+      white-space: nowrap;
+    }
+
+    tbody tr:hover {
+      background: var(--row-hover);
+    }
+
+    tbody tr:last-child td {
+      border-bottom: none;
+    }
+
+    .cell-select {
+      appearance: none;
+      -webkit-appearance: none;
+      border: 1px solid var(--border);
+      background: var(--input);
+      border-radius: 3px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text);
+      cursor: pointer;
+      outline: none;
+      min-width: 100px;
+    }
+
+    .cell-select:focus {
+      border-color: var(--accent-bright);
+    }
+
+    .cell-input {
+      width: 100%;
+      min-width: 120px;
+      border: 1px solid var(--border);
+      background: var(--input);
+      border-radius: 3px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text);
+      outline: none;
+    }
+
+    .cell-input:focus {
+      border-color: var(--accent-bright);
+    }
+
+    .cell-input.cell-input-value {
+      min-width: 64px;
+      max-width: 88px;
+      width: 88px;
+    }
+
+    .time-cell {
+      position: relative;
+      white-space: normal;
+      min-width: 200px;
+    }
+
+    .time-trigger {
+      display: inline-flex;
+      align-items: center;
+      border: 1px solid var(--border);
+      background: var(--input);
+      border-radius: 3px;
+      padding: 6px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text);
+      cursor: pointer;
+      min-width: 200px;
+      width: 100%;
+      text-align: left;
+      transition: border-color 0.15s;
+      font-variant-numeric: tabular-nums;
+    }
+
+    .time-trigger:hover,
+    .time-cell.open .time-trigger {
+      border-color: var(--accent-bright);
+    }
+
+    .time-panel {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      background: #2b2b2b;
+      border: 1px solid var(--border);
+      border-radius: 4px;
+      box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+      padding: 12px;
+      min-width: 220px;
+      width: max-content;
+    }
+
+    .time-cell.open .time-panel {
+      display: block;
+    }
+
+    .time-panel label {
+      display: block;
+      font-size: 11px;
+      font-weight: 600;
+      color: var(--text-muted);
+      letter-spacing: 0.4px;
+      margin-bottom: 4px;
+    }
+
+    .time-panel .field {
+      margin-bottom: 10px;
+    }
+
+    .time-panel .field:last-of-type {
+      margin-bottom: 0;
+    }
+
+    .time-panel input,
+    .time-panel select {
+      width: 100%;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 7px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      color: var(--text);
+      background: var(--input);
+      outline: none;
+      color-scheme: dark;
+    }
+
+    .time-panel input:focus,
+    .time-panel select:focus {
+      border-color: var(--accent-bright);
+    }
+
+    .time-panel .option-item {
+      display: block;
+      width: 100%;
+      border: none;
+      background: transparent;
+      color: var(--text);
+      text-align: left;
+      padding: 8px 10px;
+      font-size: 13px;
+      font-family: inherit;
+      cursor: pointer;
+      border-radius: 3px;
+    }
+
+    .time-panel .option-item:hover,
+    .time-panel .option-item.active {
+      background: var(--accent);
+      color: #fff;
+    }
+
+    .time-cell.type-cell {
+      min-width: 120px;
+      width: auto;
+    }
+
+    .time-cell.type-cell .time-trigger {
+      min-width: 120px;
+    }
+
+    /* Toggle */
+    .toggle {
+      position: relative;
+      width: 42px;
+      height: 22px;
+      display: inline-block;
+    }
+
+    .toggle input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .toggle .slider {
+      position: absolute;
+      inset: 0;
+      background: var(--toggle-off);
+      border-radius: 22px;
+      cursor: pointer;
+      transition: background 0.2s;
+      border: 1px solid #666;
+    }
+
+    .toggle .slider::before {
+      content: "";
+      position: absolute;
+      width: 14px;
+      height: 14px;
+      left: 3px;
+      top: 3px;
+      background: #cfcfcf;
+      border-radius: 50%;
+      transition: transform 0.2s;
+    }
+
+    .toggle input:checked + .slider {
+      background: var(--accent);
+      border-color: var(--accent-bright);
+    }
+
+    .toggle input:checked + .slider::before {
+      transform: translateX(20px);
+      background: var(--accent-bright);
+    }
+
+    .btn-delete {
+      background: none;
+      border: 1px solid var(--border);
+      border-radius: 3px;
+      padding: 5px 12px;
+      font-size: 12px;
+      font-weight: 600;
+      font-family: inherit;
+      color: var(--danger);
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-delete:hover {
+      background: rgba(224, 85, 85, 0.12);
+      border-color: var(--danger);
+    }
+
+    /* Pagination */
+    .pagination {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 6px;
+      padding: 16px 22px 20px;
+      background: #1f1f1f;
+      border-top: 1px solid #2a2a2a;
+    }
+
+    .page-btn {
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 1px solid transparent;
+      background: none;
+      border-radius: 3px;
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-muted);
+      cursor: pointer;
+      font-family: inherit;
+      transition: border-color 0.15s, color 0.15s;
+    }
+
+    .page-btn:hover {
+      color: #fff;
+    }
+
+    .page-btn.active {
+      border-color: var(--accent-bright);
+      color: var(--accent-bright);
+    }
+
+    .page-btn.nav-arrow {
+      color: var(--text-muted);
+    }
+
+    .page-btn:disabled {
+      opacity: 0.35;
+      cursor: default;
+    }
+
+    .view {
+      display: none;
+    }
+
+    .view.active {
+      display: block;
+    }
+
+    @media (max-width: 900px) {
+      body {
+        padding: 0;
+      }
+
+      .app {
+        border-radius: 0;
+        min-height: 100vh;
+      }
+
+      .content {
+        padding: 16px;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <aside class="sidebar">
+      <div class="brand">VLH</div>
+
+      <ul class="nav">
+        <li class="active" data-view="scheduler">
+          <a href="#scheduler">SCHEDULER</a>
+        </li>
+        <li data-view="timer">
+          <a href="#timer">TIMER</a>
+        </li>
+      </ul>
+    </aside>
+
+    <div class="main">
+      <div class="content">
+        <!-- Scheduler -->
+        <section class="view active" id="view-scheduler">
+          <div class="breadcrumb">Scheduler</div>
+
+          <div class="card">
+            <div class="card-header">
+              <h1>SCHEDULER</h1>
+              <button class="btn-export" id="btn-new-task" type="button">New task</button>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>TASK NAME</th>
+                    <th>OSC ADDRESS</th>
+                    <th>OSC VALUE</th>
+                    <th>TYPE</th>
+                    <th>TIME</th>
+                    <th>ACTIVE</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="tasks-body"></tbody>
+              </table>
+            </div>
+
+            <div class="pagination" id="pagination"></div>
+          </div>
+        </section>
+
+        <!-- Timer -->
+        <section class="view" id="view-timer">
+          <div class="breadcrumb">Timer</div>
+
+          <div class="card">
+            <div class="card-header">
+              <h1>TIMER</h1>
+              <button class="btn-export" id="btn-new-timer" type="button">New timer</button>
+            </div>
+
+            <div class="table-wrap">
+              <table>
+                <thead>
+                  <tr>
+                    <th>NAME</th>
+                    <th>OSC ADDRESS</th>
+                    <th>TYPE</th>
+                    <th>TIME</th>
+                    <th>OUTPUT FORMAT</th>
+                    <th>ACTIVE</th>
+                    <th>ACTION</th>
+                  </tr>
+                </thead>
+                <tbody id="timers-body"></tbody>
+              </table>
+            </div>
+          </div>
+        </section>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    const TYPES = ["Once", "Daily", "Weekly", "Monthly"];
+    const TIMER_TYPES = ["Count Up", "Countdown"];
+    const OUTPUT_FORMATS = ["DD:HH:MM:SS", "HH:MM:SS", "MM:SS", "SS"];
+    const PAGE_SIZE = 10;
+    const WEEKDAYS = [
+      { value: "1", label: "Monday" },
+      { value: "2", label: "Tuesday" },
+      { value: "3", label: "Wednesday" },
+      { value: "4", label: "Thursday" },
+      { value: "5", label: "Friday" },
+      { value: "6", label: "Saturday" },
+      { value: "0", label: "Sunday" },
+    ];
+
+    let currentPage = 1;
+
+    const tasks = [
+      { name: "Morning Fade", command: "/s/fade", value: "1.0", type: "Once", date: "2026-08-26", time: "08:00:00", weekday: "1", monthDay: "1", active: true },
+      { name: "Lobby Lights On", command: "/lights/lobby", value: "1", type: "Daily", date: "", time: "09:00:00", weekday: "1", monthDay: "1", active: false },
+      { name: "Warmup Sequence", command: "/show/warmup", value: "start", type: "Weekly", date: "", time: "10:30:00", weekday: "1", monthDay: "1", active: true },
+      { name: "Volume Soft", command: "/audio/volume", value: "0.4", type: "Once", date: "2026-09-01", time: "12:00:00", weekday: "1", monthDay: "1", active: false },
+      { name: "Scene Reset", command: "/scene/reset", value: "default", type: "Daily", date: "", time: "14:15:00", weekday: "1", monthDay: "1", active: true },
+      { name: "Blackout Cue", command: "/lights/blackout", value: "1", type: "Once", date: "2026-08-30", time: "18:00:00", weekday: "5", monthDay: "1", active: true },
+      { name: "Ambient Loop", command: "/audio/ambient", value: "play", type: "Daily", date: "", time: "19:30:00", weekday: "1", monthDay: "1", active: false },
+      { name: "Closing Fade", command: "/s/fade", value: "0.0", type: "Weekly", date: "", time: "22:00:00", weekday: "5", monthDay: "1", active: true },
+      { name: "Night Mode", command: "/mode/night", value: "on", type: "Daily", date: "", time: "23:00:00", weekday: "1", monthDay: "1", active: false },
+      { name: "System Idle", command: "/system/idle", value: "1", type: "Monthly", date: "", time: "23:45:00", weekday: "1", monthDay: "15", active: true },
+      { name: "Backup Snapshot", command: "/system/backup", value: "now", type: "Weekly", date: "", time: "03:00:00", weekday: "0", monthDay: "1", active: false },
+    ];
+
+    const timers = [
+      {
+        name: "Show Clock",
+        command: "/timer/show",
+        type: "Count Up",
+        date: "2026-08-25",
+        time: "00:00:00",
+        format: "DD:HH:MM:SS",
+        active: false,
+      },
+      {
+        name: "Interval Countdown",
+        command: "/timer/countdown",
+        type: "Countdown",
+        date: "2026-08-26",
+        time: "01:30:00",
+        format: "HH:MM:SS",
+        active: false,
+      },
+    ];
+
+    function pad2(n) {
+      return String(Math.max(0, Math.floor(n))).padStart(2, "0");
+    }
+
+    function formatByParts(totalSeconds, format) {
+      let sec = Math.max(0, Math.floor(totalSeconds));
+      const dd = Math.floor(sec / 86400);
+      sec %= 86400;
+      const hh = Math.floor(sec / 3600);
+      sec %= 3600;
+      const mm = Math.floor(sec / 60);
+      const ss = sec % 60;
+
+      switch (format) {
+        case "HH:MM:SS":
+          return `${pad2(dd * 24 + hh)}:${pad2(mm)}:${pad2(ss)}`;
+        case "MM:SS":
+          return `${pad2(dd * 1440 + hh * 60 + mm)}:${pad2(ss)}`;
+        case "SS":
+          return String(dd * 86400 + hh * 3600 + mm * 60 + ss).padStart(2, "0");
+        case "DD:HH:MM:SS":
+        default:
+          return `${pad2(dd)}:${pad2(hh)}:${pad2(mm)}:${pad2(ss)}`;
+      }
+    }
+
+    function parseDateTime(date, time) {
+      const t = (time || "00:00:00").length === 5 ? `${time}:00` : time || "00:00:00";
+      const ms = Date.parse(`${date || "1970-01-01"}T${t}`);
+      return Number.isNaN(ms) ? Date.now() : ms;
+    }
+
+    function formatStartSummary(timer) {
+      if (!timer.date) return "Select date & time";
+      const [y, m, d] = timer.date.split("-");
+      return `${d}.${m}.${y} ${timer.time || "00:00:00"}`;
+    }
+
+    function getTimerSeconds(timer) {
+      const target = parseDateTime(timer.date, timer.time);
+      const now = Date.now();
+      if (timer.type === "Countdown") {
+        return Math.max(0, (target - now) / 1000);
+      }
+      return Math.max(0, (now - target) / 1000);
+    }
+
+    function getTimerOutput(timer) {
+      if (!timer.active) return formatStartSummary(timer);
+      return formatByParts(getTimerSeconds(timer), timer.format);
+    }
+    document.querySelectorAll(".nav > li").forEach((item) => {
+      item.querySelector("a").addEventListener("click", (e) => {
+        e.preventDefault();
+        const view = item.dataset.view;
+        document.querySelectorAll(".nav > li").forEach((li) => li.classList.remove("active"));
+        item.classList.add("active");
+        document.querySelectorAll(".view").forEach((v) => v.classList.remove("active"));
+        document.getElementById(`view-${view}`).classList.add("active");
+      });
+    });
+
+    function escapeAttr(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/"/g, "&quot;")
+        .replace(/</g, "&lt;");
+    }
+
+    function totalPages() {
+      return Math.max(1, Math.ceil(tasks.length / PAGE_SIZE));
+    }
+
+    function clampPage() {
+      currentPage = Math.min(Math.max(1, currentPage), totalPages());
+    }
+
+    function pageSlice() {
+      clampPage();
+      const start = (currentPage - 1) * PAGE_SIZE;
+      return tasks.map((task, index) => ({ task, index })).slice(start, start + PAGE_SIZE);
+    }
+
+    function weekdayLabel(value) {
+      return WEEKDAYS.find((d) => d.value === String(value))?.label || "Monday";
+    }
+
+    function formatDate(date) {
+      if (!date) return "Select date";
+      const [y, m, d] = date.split("-");
+      return `${d}.${m}.${y}`;
+    }
+
+    function formatTimeSummary(task) {
+      switch (task.type) {
+        case "Once":
+          return `${formatDate(task.date)} ${task.time}`;
+        case "Daily":
+          return `Every day ${task.time}`;
+        case "Weekly":
+          return `${weekdayLabel(task.weekday)} ${task.time}`;
+        case "Monthly":
+          return `Day ${task.monthDay} · ${task.time}`;
+        default:
+          return task.time;
+      }
+    }
+
+    function typeOptions(selected) {
+      return TYPES.map(
+        (type) =>
+          `<button type="button" class="option-item${type === selected ? " active" : ""}" data-value="${type}">${type}</button>`
+      ).join("");
+    }
+
+    function timerTypeOptions(selected) {
+      return TIMER_TYPES.map(
+        (type) =>
+          `<button type="button" class="option-item${type === selected ? " active" : ""}" data-value="${type}">${type}</button>`
+      ).join("");
+    }
+
+    function formatOptions(selected) {
+      return OUTPUT_FORMATS.map(
+        (fmt) => `<option value="${fmt}"${fmt === selected ? " selected" : ""}>${fmt}</option>`
+      ).join("");
+    }
+
+    function weekdayOptions(selected) {
+      return WEEKDAYS.map((day) => `<option value="${day.value}"${day.value === String(selected) ? " selected" : ""}>${day.label}</option>`).join("");
+    }
+
+    function monthDayOptions(selected) {
+      return Array.from({ length: 31 }, (_, i) => {
+        const day = String(i + 1);
+        return `<option value="${day}"${day === String(selected) ? " selected" : ""}>${day}</option>`;
+      }).join("");
+    }
+
+    function timePanelFields(task) {
+      const timeField = `
+        <div class="field">
+          <label>TIME</label>
+          <input type="time" step="1" data-field="time" value="${task.time}" />
+        </div>
+      `;
+      if (task.type === "Once") {
+        return `
+          <div class="field">
+            <label>DATE</label>
+            <input type="date" data-field="date" value="${task.date || ""}" />
+          </div>
+          ${timeField}
+        `;
+      }
+      if (task.type === "Weekly") {
+        return `
+          <div class="field">
+            <label>WEEKDAY</label>
+            <select data-field="weekday">${weekdayOptions(task.weekday)}</select>
+          </div>
+          ${timeField}
+        `;
+      }
+      if (task.type === "Monthly") {
+        return `
+          <div class="field">
+            <label>DAY OF MONTH</label>
+            <select data-field="monthDay">${monthDayOptions(task.monthDay)}</select>
+          </div>
+          ${timeField}
+        `;
+      }
+      return timeField;
+    }
+
+    function createEmptyTask() {
+      return {
+        name: "New task",
+        command: "/",
+        value: "",
+        type: "Once",
+        date: new Date().toISOString().slice(0, 10),
+        time: "12:00:00",
+        weekday: "1",
+        monthDay: "1",
+        active: true,
+      };
+    }
+
+    function renderPagination() {
+      const pages = totalPages();
+      let html = `<button class="page-btn nav-arrow" type="button" data-page="prev" ${currentPage === 1 ? "disabled" : ""}>&lt;</button>`;
+      for (let page = 1; page <= pages; page++) {
+        html += `<button class="page-btn${page === currentPage ? " active" : ""}" type="button" data-page="${page}">${page}</button>`;
+      }
+      html += `<button class="page-btn nav-arrow" type="button" data-page="next" ${currentPage === pages ? "disabled" : ""}>&gt;</button>`;
+      document.getElementById("pagination").innerHTML = html;
+      document.querySelectorAll("#pagination .page-btn").forEach((btn) => {
+        btn.addEventListener("click", () => {
+          const target = btn.dataset.page;
+          if (target === "prev") currentPage -= 1;
+          else if (target === "next") currentPage += 1;
+          else currentPage = Number(target);
+          renderTasks();
+        });
+      });
+    }
+
+    function renderTasks() {
+      document.getElementById("tasks-body").innerHTML = pageSlice()
+        .map(({ task, index }) => `
+        <tr data-index="${index}">
+          <td><input class="cell-input" type="text" data-field="name" data-index="${index}" value="${escapeAttr(task.name)}" /></td>
+          <td><input class="cell-input" type="text" data-field="command" data-index="${index}" value="${escapeAttr(task.command)}" /></td>
+          <td><input class="cell-input cell-input-value" type="text" data-field="value" data-index="${index}" value="${escapeAttr(task.value)}" /></td>
+          <td class="time-cell type-cell" data-index="${index}">
+            <button type="button" class="time-trigger" aria-haspopup="true">
+              <span class="time-label">${task.type}</span>
+            </button>
+            <div class="time-panel">${typeOptions(task.type)}</div>
+          </td>
+          <td class="time-cell" data-index="${index}">
+            <button type="button" class="time-trigger" aria-haspopup="true">
+              <span class="time-label">${formatTimeSummary(task)}</span>
+            </button>
+            <div class="time-panel">${timePanelFields(task)}</div>
+          </td>
+          <td>
+            <label class="toggle">
+              <input type="checkbox" class="active-toggle" data-index="${index}"${task.active ? " checked" : ""} />
+              <span class="slider"></span>
+            </label>
+          </td>
+          <td><button type="button" class="btn-delete" data-index="${index}">Delete</button></td>
+        </tr>`).join("");
+      renderPagination();
+      bindTaskEvents();
+    }
+
+    function positionPanel(trigger, panel) {
+      const rect = trigger.getBoundingClientRect();
+      const gap = 4;
+      const prevDisplay = panel.style.display;
+      panel.style.visibility = "hidden";
+      panel.style.display = "block";
+      const panelRect = panel.getBoundingClientRect();
+      let top = rect.bottom + gap;
+      let left = rect.left;
+
+      if (top + panelRect.height > window.innerHeight - 8) {
+        top = Math.max(8, rect.top - panelRect.height - gap);
+      }
+      if (left + panelRect.width > window.innerWidth - 8) {
+        left = Math.max(8, window.innerWidth - panelRect.width - 8);
+      }
+
+      panel.style.top = `${top}px`;
+      panel.style.left = `${left}px`;
+      panel.style.visibility = "";
+      panel.style.display = prevDisplay;
+    }
+
+    function closeAllTimePanels(except) {
+      document.querySelectorAll(".time-cell.open").forEach((cell) => {
+        if (cell !== except) cell.classList.remove("open");
+      });
+    }
+
+    function bindTaskEvents() {
+      document.querySelectorAll("#tasks-body .cell-input").forEach((input) => {
+        input.addEventListener("input", (e) => {
+          tasks[Number(e.target.dataset.index)][e.target.dataset.field] = e.target.value;
+        });
+      });
+
+      document.querySelectorAll("#tasks-body .type-cell .option-item").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const cell = btn.closest(".time-cell");
+          const index = Number(cell.dataset.index);
+          tasks[index].type = btn.dataset.value;
+          if (tasks[index].type === "Once" && !tasks[index].date) {
+            tasks[index].date = new Date().toISOString().slice(0, 10);
+          }
+          renderTasks();
+        });
+      });
+
+      document.querySelectorAll("#tasks-body .time-trigger").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const cell = btn.closest(".time-cell");
+          const panel = cell.querySelector(".time-panel");
+          const wasOpen = cell.classList.contains("open");
+          closeAllTimePanels();
+          if (!wasOpen) {
+            cell.classList.add("open");
+            positionPanel(btn, panel);
+          }
+        });
+      });
+
+      document.querySelectorAll("#tasks-body .time-panel").forEach((panel) => {
+        panel.addEventListener("click", (e) => e.stopPropagation());
+        panel.querySelectorAll("[data-field]").forEach((input) => {
+          input.addEventListener("change", (e) => {
+            const cell = panel.closest(".time-cell");
+            const index = Number(cell.dataset.index);
+            tasks[index][e.target.dataset.field] = e.target.value;
+            cell.querySelector(".time-label").textContent = formatTimeSummary(tasks[index]);
+          });
+        });
+      });
+
+      document.querySelectorAll("#tasks-body .active-toggle").forEach((toggle) => {
+        toggle.addEventListener("change", (e) => {
+          tasks[Number(e.target.dataset.index)].active = e.target.checked;
+        });
+      });
+
+      document.querySelectorAll("#tasks-body .btn-delete").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          tasks.splice(Number(e.target.dataset.index), 1);
+          renderTasks();
+        });
+      });
+    }
+
+    document.addEventListener("click", () => {
+      closeAllTimePanels();
+    });
+
+    function repositionOpenPanels() {
+      document.querySelectorAll(".time-cell.open").forEach((cell) => {
+        const trigger = cell.querySelector(".time-trigger");
+        const panel = cell.querySelector(".time-panel");
+        if (trigger && panel) positionPanel(trigger, panel);
+      });
+    }
+
+    window.addEventListener("resize", repositionOpenPanels);
+    window.addEventListener("scroll", repositionOpenPanels, true);
+
+    document.getElementById("btn-new-task").addEventListener("click", () => {
+      tasks.unshift(createEmptyTask());
+      currentPage = 1;
+      renderTasks();
+      const firstInput = document.querySelector("#tasks-body .cell-input[data-field='name']");
+      if (firstInput) {
+        firstInput.focus();
+        firstInput.select();
+      }
+    });
+
+    function createEmptyTimer() {
+      const now = new Date();
+      const date = now.toISOString().slice(0, 10);
+      const time = `${pad2(now.getHours())}:${pad2(now.getMinutes())}:${pad2(now.getSeconds())}`;
+      return {
+        name: "New timer",
+        command: "/timer/",
+        type: "Countdown",
+        date,
+        time,
+        format: "DD:HH:MM:SS",
+        active: false,
+      };
+    }
+
+    function startPanelFields(timer) {
+      return `
+        <div class="field">
+          <label>DATE</label>
+          <input type="date" data-field="date" value="${timer.date || ""}" />
+        </div>
+        <div class="field">
+          <label>TIME</label>
+          <input type="time" step="1" data-field="time" value="${timer.time || "00:00:00"}" />
+        </div>
+      `;
+    }
+
+    function renderTimers() {
+      document.getElementById("timers-body").innerHTML = timers.map((timer, index) => `
+        <tr data-index="${index}">
+          <td><input class="cell-input" type="text" data-field="name" data-index="${index}" value="${escapeAttr(timer.name)}" /></td>
+          <td><input class="cell-input" type="text" data-field="command" data-index="${index}" value="${escapeAttr(timer.command)}" /></td>
+          <td class="time-cell type-cell" data-index="${index}">
+            <button type="button" class="time-trigger" aria-haspopup="true">
+              <span class="time-label">${timer.type}</span>
+            </button>
+            <div class="time-panel">${timerTypeOptions(timer.type)}</div>
+          </td>
+          <td class="time-cell" data-index="${index}">
+            <button type="button" class="time-trigger" aria-haspopup="true">
+              <span class="time-label">${getTimerOutput(timer)}</span>
+            </button>
+            <div class="time-panel">${startPanelFields(timer)}</div>
+          </td>
+          <td><select class="cell-select timer-format-select" data-index="${index}">${formatOptions(timer.format)}</select></td>
+          <td>
+            <label class="toggle">
+              <input type="checkbox" class="timer-active-toggle" data-index="${index}"${timer.active ? " checked" : ""} />
+              <span class="slider"></span>
+            </label>
+          </td>
+          <td><button type="button" class="btn-delete timer-delete" data-index="${index}">Delete</button></td>
+        </tr>`).join("");
+      bindTimerEvents();
+    }
+
+    function updateTimerOutputs() {
+      document.querySelectorAll("#timers-body .time-cell:not(.type-cell) .time-label").forEach((el) => {
+        const cell = el.closest(".time-cell");
+        if (!cell) return;
+        const index = Number(cell.dataset.index);
+        if (!timers[index]) return;
+        el.textContent = getTimerOutput(timers[index]);
+      });
+    }
+
+    function bindTimerEvents() {
+      document.querySelectorAll("#timers-body .cell-input").forEach((input) => {
+        input.addEventListener("input", (e) => {
+          timers[Number(e.target.dataset.index)][e.target.dataset.field] = e.target.value;
+        });
+      });
+
+      document.querySelectorAll("#timers-body .type-cell .option-item").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const cell = btn.closest(".time-cell");
+          const index = Number(cell.dataset.index);
+          timers[index].type = btn.dataset.value;
+          closeAllTimePanels();
+          updateTimerOutputs();
+          cell.querySelector(".time-label").textContent = timers[index].type;
+          cell.querySelectorAll(".option-item").forEach((item) => {
+            item.classList.toggle("active", item.dataset.value === timers[index].type);
+          });
+        });
+      });
+
+      document.querySelectorAll(".timer-format-select").forEach((select) => {
+        select.addEventListener("change", (e) => {
+          timers[Number(e.target.dataset.index)].format = e.target.value;
+          updateTimerOutputs();
+        });
+      });
+
+      document.querySelectorAll("#timers-body .time-trigger").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          e.stopPropagation();
+          const cell = btn.closest(".time-cell");
+          const panel = cell.querySelector(".time-panel");
+          const wasOpen = cell.classList.contains("open");
+          closeAllTimePanels();
+          if (!wasOpen) {
+            cell.classList.add("open");
+            positionPanel(btn, panel);
+          }
+        });
+      });
+
+      document.querySelectorAll("#timers-body .time-panel").forEach((panel) => {
+        panel.addEventListener("click", (e) => e.stopPropagation());
+        panel.querySelectorAll("[data-field]").forEach((input) => {
+          input.addEventListener("change", (e) => {
+            const cell = panel.closest(".time-cell");
+            const index = Number(cell.dataset.index);
+            let value = e.target.value;
+            if (e.target.dataset.field === "time" && value.length === 5) value = `${value}:00`;
+            timers[index][e.target.dataset.field] = value;
+            updateTimerOutputs();
+          });
+        });
+      });
+
+      document.querySelectorAll(".timer-active-toggle").forEach((toggle) => {
+        toggle.addEventListener("change", (e) => {
+          timers[Number(e.target.dataset.index)].active = e.target.checked;
+          updateTimerOutputs();
+        });
+      });
+
+      document.querySelectorAll(".timer-delete").forEach((btn) => {
+        btn.addEventListener("click", (e) => {
+          timers.splice(Number(e.target.dataset.index), 1);
+          renderTimers();
+        });
+      });
+    }
+
+    document.getElementById("btn-new-timer").addEventListener("click", () => {
+      timers.unshift(createEmptyTimer());
+      renderTimers();
+      const firstInput = document.querySelector("#timers-body .cell-input[data-field='name']");
+      if (firstInput) {
+        firstInput.focus();
+        firstInput.select();
+      }
+    });
+
+    setInterval(updateTimerOutputs, 250);
+    renderTasks();
+    renderTimers();
+  </script>
+</body>
+</html>
