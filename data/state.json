@@ -1,0 +1,175 @@
+{
+  "settings": {
+    "osc": {
+      "host": "127.0.0.1",
+      "port": 7000
+    }
+  },
+  "tasks": [
+    {
+      "id": "a1000001-0001-4000-8000-000000000001",
+      "name": "test",
+      "command": "/composition/layers/1/clips/2/connect",
+      "value": "1",
+      "type": "Once",
+      "date": "2026-08-24",
+      "time": "20:48:00",
+      "weekday": "1",
+      "monthDay": "1",
+      "active": false,
+      "last_fired": "2026-08-25T20:48"
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000002",
+      "name": "Lobby Lights On",
+      "command": "/lights/lobby",
+      "value": "1",
+      "type": "Daily",
+      "date": "",
+      "time": "09:00:00",
+      "weekday": "1",
+      "monthDay": "1",
+      "active": false,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000003",
+      "name": "Warmup Sequence",
+      "command": "/show/warmup",
+      "value": "start",
+      "type": "Weekly",
+      "date": "",
+      "time": "10:30:00",
+      "weekday": "1",
+      "monthDay": "1",
+      "active": true,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000004",
+      "name": "Volume Soft",
+      "command": "/audio/volume",
+      "value": "0.4",
+      "type": "Once",
+      "date": "2026-09-01",
+      "time": "12:00:00",
+      "weekday": "1",
+      "monthDay": "1",
+      "active": false,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000005",
+      "name": "Scene Reset",
+      "command": "/scene/reset",
+      "value": "default",
+      "type": "Daily",
+      "date": "",
+      "time": "14:15:00",
+      "weekday": "1",
+      "monthDay": "1",
+      "active": true,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000006",
+      "name": "Blackout Cue",
+      "command": "/lights/blackout",
+      "value": "1",
+      "type": "Once",
+      "date": "2026-08-30",
+      "time": "18:00:00",
+      "weekday": "5",
+      "monthDay": "1",
+      "active": true,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000007",
+      "name": "Ambient Loop",
+      "command": "/audio/ambient",
+      "value": "play",
+      "type": "Daily",
+      "date": "",
+      "time": "19:30:00",
+      "weekday": "1",
+      "monthDay": "1",
+      "active": false,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000008",
+      "name": "Closing Fade",
+      "command": "/s/fade",
+      "value": "0.0",
+      "type": "Weekly",
+      "date": "",
+      "time": "22:00:00",
+      "weekday": "5",
+      "monthDay": "1",
+      "active": true,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000009",
+      "name": "Night Mode",
+      "command": "/mode/night",
+      "value": "on",
+      "type": "Daily",
+      "date": "",
+      "time": "23:00:00",
+      "weekday": "1",
+      "monthDay": "1",
+      "active": false,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000010",
+      "name": "System Idle",
+      "command": "/system/idle",
+      "value": "1",
+      "type": "Monthly",
+      "date": "",
+      "time": "23:45:00",
+      "weekday": "1",
+      "monthDay": "15",
+      "active": true,
+      "last_fired": null
+    },
+    {
+      "id": "a1000001-0001-4000-8000-000000000011",
+      "name": "Backup Snapshot",
+      "command": "/system/backup",
+      "value": "now",
+      "type": "Weekly",
+      "date": "",
+      "time": "03:00:00",
+      "weekday": "0",
+      "monthDay": "1",
+      "active": false,
+      "last_fired": null
+    }
+  ],
+  "timers": [
+    {
+      "id": "b1000001-0001-4000-8000-000000000001",
+      "name": "Show Clock",
+      "command": "/composition/layers/1/clips/1/video/source/blocktextgenerator/text/params/lines",
+      "type": "Count Up",
+      "date": "2026-08-25",
+      "time": "00:00:00",
+      "format": "DD:HH:MM:SS",
+      "active": true
+    },
+    {
+      "id": "b1000001-0001-4000-8000-000000000002",
+      "name": "Interval Countdown",
+      "command": "/timer/countdown",
+      "type": "Countdown",
+      "date": "2026-08-26",
+      "time": "01:30:00",
+      "format": "HH:MM:SS",
+      "active": false
+    }
+  ]
+}
