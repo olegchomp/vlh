@@ -20,10 +20,10 @@ v.1.0.0 · [@VJSCHOOL](https://t.me/vjschool)
 
 ## Development
 
-From the parent folder that contains `.venv` and `vlh/`:
+Create a venv in the **parent** folder of this repo (the folder that contains `vlh/`):
 
 ```powershell
-cd F:\VJSCHOOL\VLH
+cd ..
 python -m venv .venv
 .\.venv\Scripts\Activate.ps1
 pip install -r vlh\requirements.txt
@@ -31,25 +31,26 @@ pip install -r vlh\requirements.txt
 
 If `pip` hangs on `pypi.ngc.nvidia.com`, temporarily clear the NVIDIA `extra-index-url` in `C:\ProgramData\pip\pip.ini` (or use [`build_exe.ps1`](build_exe.ps1), which does this for the build).
 
-Run the API + UI:
+Run the API + UI (from the parent folder):
 
 ```powershell
-cd F:\VJSCHOOL\VLH
 .\.venv\Scripts\python.exe -m uvicorn backend.main:app --app-dir vlh --host 127.0.0.1 --port 8765 --reload
 ```
 
 Open [http://127.0.0.1:8765/](http://127.0.0.1:8765/).
 
-Or run the tray entry (opens the browser):
+Or run the tray entry from this repo:
 
 ```powershell
-cd F:\VJSCHOOL\VLH\vlh
+cd vlh
 ..\.venv\Scripts\python.exe run.py
 ```
+
 ## Build EXE
 
+From this repo:
+
 ```powershell
-cd F:\VJSCHOOL\VLH\vlh
 .\build_exe.ps1
 ```
 
